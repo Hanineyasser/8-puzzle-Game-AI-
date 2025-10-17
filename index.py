@@ -2,6 +2,7 @@ import random
 import json
 import os
 from BreadthFS import Bfs
+from DFS import dfs
 
 
 def is_solvable(flat_state):
@@ -49,12 +50,18 @@ def main():
     print("Goal State:")
     for row in goal_state:
         print(row)
+
+
+
     print("Use BFS algorithm to solve the puzzle.")
     steps = Bfs(initial_state, goal_state)
     if steps:
         print(f"Solution found in {len(steps)-1} moves")
     else:
         print("No solution found")
+
+     
+
 
     out_path = os.path.join(os.path.dirname(__file__), 'BFS_viewer.html')
     write_viewer(initial_state, steps or [initial_state], out_path)
