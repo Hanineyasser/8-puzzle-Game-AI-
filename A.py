@@ -84,3 +84,30 @@ def A_star(initialState: list[list[int]], goalState: list[list[int]]):
                 heapq.heappush(pq, (new_f, new_g, neighbor, path + [neighbor]))
 
     return None
+def A_star_Euc(initialState: list[list[int]], goalState: list[list[int]]):
+    """Perform A* search and return path from start to goal."""
+    start = tuple(tuple(r) for r in initialState)
+    goal = tuple(tuple(r) for r in goalState)
+
+    pq = []
+    heapq.heappush(pq, (euclidean_distance(start), 0, start, [start]))
+    visited = set()
+
+    while pq:
+        f, g, state, path = heapq.heappop(pq)
+
+        if state in visited:
+            continue
+        visited.add(state)
+
+        if state == goal:
+            return path  # found solution!
+
+        for neighbor in neighbors(state):
+            if neighbor not in visited:
+                new_g = g + 1
+                new_f = new_g + euclidean_distance(neighbor)
+                heapq.heappush(pq, (new_f, new_g, neighbor, path + [neighbor]))
+
+    return None
+
