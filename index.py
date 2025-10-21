@@ -85,14 +85,13 @@ def main():
         algo_name = "BFS"
     elif choice == '2':
         print("Using DFS algorithm to solve the puzzle.")
-        initial_state = [[1,2,5],[3,4,0],[6,7,8]]
         from DFS import dfs
-        steps = dfs(initial_state, goal_state, max_depth=600)
+        steps = dfs(initial_state, goal_state)
         algo_name = "DFS"
     elif choice == '3':
         print("Using IDS algorithm to solve the puzzle.")
         from IDFS import idfs
-        steps = idfs(initial_state, goal_state, max_depth=600)
+        steps = idfs(initial_state, goal_state)
         algo_name = "IDS"
     elif choice == '4':
         print("Using A* (Manhattan) algorithm to solve the puzzle.")
