@@ -1,7 +1,7 @@
 from collections import deque
 from helperFuncs import neighbors
 import random
-from index import is_solvable
+# from index import is_solvable
 
 
 
