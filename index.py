@@ -2,7 +2,7 @@ import random
 import json
 import os
 from BreadthFS import Bfs
-from DFS import dfs
+# from DFS import dfs
 
 
 def is_solvable(flat_state):
@@ -21,7 +21,8 @@ def write_viewer(initial_state, steps, out_path):
     with open(tpl_path, 'r', encoding='utf-8') as f:
         tpl = f.read()
     data = {'initial': initial_state, 'steps': steps}
-    content = tpl.replace('{data}', json.dumps(data))
+    # Use a variable for DATA in the template
+    content = tpl.replace('const DATA =', 'var DATA =').replace('{ data }', json.dumps(data)).replace('{data}', json.dumps(data))
     with open(out_path, 'w', encoding='utf-8') as f:
         f.write(content)
 
@@ -41,6 +42,7 @@ def main():
         if attempts >= 1000:
             # fallback: accept current state (rare)
             break
+    # state=[1,2,5,3,4,0,6,7,8]
     print(state)
     initial_state = [state[i:i+3] for i in range(0, 9, 3)]
     print("Initial State:")
@@ -51,19 +53,36 @@ def main():
     for row in goal_state:
         print(row)
 
+    print("Choose algorithm:")
+    print("1. BFS")
+    print("2. A* (Manhattan)")
+    print("3. A* (Euclidean)")
+    choice = input("Enter 1, 2, or 3: ").strip()
+    if choice == '1':
+        print("Using BFS algorithm to solve the puzzle.")
+        steps = Bfs(initial_state, goal_state)
+        algo_name = "BFS"
+    elif choice == '2':
+        print("Using A* (Manhattan) algorithm to solve the puzzle.")
+        from A import A_star
+        steps = A_star(initial_state, goal_state)
+        algo_name = "A_star_Manhattan"
+    elif choice == '3':
+        print("Using A* (Euclidean) algorithm to solve the puzzle.")
+        from A import A_star_Euc
+        steps = A_star_Euc(initial_state, goal_state)
+        algo_name = "A_star_Euclidean"
+    else:
+        print("Invalid choice. Defaulting to BFS.")
+        steps = Bfs(initial_state, goal_state)
+        algo_name = "BFS"
 
-
-    print("Use BFS algorithm to solve the puzzle.")
-    steps = Bfs(initial_state, goal_state)
     if steps:
         print(f"Solution found in {len(steps)-1} moves")
     else:
         print("No solution found")
 
-     
-
-
-    out_path = os.path.join(os.path.dirname(__file__), 'BFS_viewer.html')
+    out_path = os.path.join(os.path.dirname(__file__), f'{algo_name}_viewer.html')
     write_viewer(initial_state, steps or [initial_state], out_path)
     print(f'Wrote viewer to: {out_path}')
 
