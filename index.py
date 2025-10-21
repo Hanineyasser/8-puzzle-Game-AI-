@@ -17,7 +17,7 @@ def is_solvable(flat_state):
 
 
 def write_viewer(initial_state, steps, out_path):
-    tpl_path = os.path.join(os.path.dirname(__file__), 'BFS_viewer_template.html')
+    tpl_path = os.path.join(os.path.dirname(__file__), 'Viewer_template.html')
     with open(tpl_path, 'r', encoding='utf-8') as f:
         tpl = f.read()
     data = {'initial': initial_state, 'steps': steps}
@@ -55,27 +55,32 @@ def main():
 
     print("Choose algorithm:")
     print("1. BFS")
-    print("2. A* (Manhattan)")
-    print("3. A* (Euclidean)")
-    choice = input("Enter 1, 2, or 3: ").strip()
+    print("2. DFS")
+    print("3. A* (Manhattan)")
+    print("4. A* (Euclidean)")
+    choice = input("Enter 1, 2, 3, or 4: ").strip()
     if choice == '1':
         print("Using BFS algorithm to solve the puzzle.")
         steps = Bfs(initial_state, goal_state)
         algo_name = "BFS"
     elif choice == '2':
+        print("Using DFS algorithm to solve the puzzle.")
+        initial_state = [[1,2,5],[3,4,0],[6,7,8]]
+        from DFS import dfs
+        steps = dfs(initial_state, goal_state, max_depth=600)
+        algo_name = "DFS"
+    elif choice == '3':
         print("Using A* (Manhattan) algorithm to solve the puzzle.")
         from A import A_star
         steps = A_star(initial_state, goal_state)
         algo_name = "A_star_Manhattan"
-    elif choice == '3':
+    elif choice == '4':
         print("Using A* (Euclidean) algorithm to solve the puzzle.")
         from A import A_star_Euc
         steps = A_star_Euc(initial_state, goal_state)
         algo_name = "A_star_Euclidean"
     else:
         print("Invalid choice. Defaulting to BFS.")
-        steps = Bfs(initial_state, goal_state)
-        algo_name = "BFS"
 
     if steps:
         print(f"Solution found in {len(steps)-1} moves")
