@@ -58,7 +58,7 @@ def main():
     print("2. DFS")
     print("3. A* (Manhattan)")
     print("4. A* (Euclidean)")
-    choice = input("Enter 1, 2, 3, or 4: ").strip()
+    choice = input("Enter 1, 2, 3, 4 or 5: ").strip()
     if choice == '1':
         print("Using BFS algorithm to solve the puzzle.")
         steps = Bfs(initial_state, goal_state)
@@ -70,11 +70,16 @@ def main():
         steps = dfs(initial_state, goal_state, max_depth=600)
         algo_name = "DFS"
     elif choice == '3':
+        print("Using IDS algorithm to solve the puzzle.")
+        from IDFS import idfs
+        steps = idfs(initial_state, goal_state, max_depth=600)
+        algo_name = "IDS"
+    elif choice == '4':
         print("Using A* (Manhattan) algorithm to solve the puzzle.")
         from A import A_star
         steps = A_star(initial_state, goal_state)
         algo_name = "A_star_Manhattan"
-    elif choice == '4':
+    elif choice == '5':
         print("Using A* (Euclidean) algorithm to solve the puzzle.")
         from A import A_star_Euc
         steps = A_star_Euc(initial_state, goal_state)
