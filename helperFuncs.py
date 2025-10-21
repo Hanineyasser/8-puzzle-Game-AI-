@@ -1,17 +1,21 @@
 # Function to find the position of the blank (0) tile
 def findBlank(state):
+        # 3x3 grid
         for i in range(3):
             for j in range(3):
                 if state[i][j] == 0:
+                    # return the position of the blank tile
                     return (i, j)
         return None
-# Function to generate possible moves from the current state
+# Function to generate possible moves from the current state(neighbors)
 def neighbors(state):
     neighbors = []
     x, y = findBlank(state)
     directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # Up, Down, Left, Right
     for dx, dy in directions:
+        # new position of the blank tile after the possible movement
         new_x, new_y = x + dx, y + dy
+        # make sure the new position is within bounds of the grid
         if 0 <= new_x < 3 and 0 <= new_y < 3:
             # copy the matrix to not affect the old one when swapping
             new_state = [row[:] for row in state]
