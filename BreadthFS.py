@@ -23,4 +23,5 @@ def Bfs(initial_state, goal_state):
                 visited.add(neighbor_tuple)
                 # path + the neighbor's state-->path from start to neighbor
                 queue.append((neighbor, path + [neighbor]))
+
     return None

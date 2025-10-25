@@ -77,7 +77,7 @@ def A_star(initialState: list[list[int]], goalState: list[list[int]]):
     # takes--> pq, (f(n),g(n)-->cost taken so far, current state, path to current state)
     heapq.heappush(pq, (manhattan_distance(start), 0, start, [start]))
     visited = set()
-
+    move = 0
     while pq:
         f, g, state, path = heapq.heappop(pq)
         # if visited skip and take the next one

@@ -50,24 +50,26 @@ def main():
     print("Initial State: ")
     state = [0,1,2,3,4,5,6,7,8]
     # shuffle until we pick a solvable state so BFS has a solution to show
-    attempts = 0
-    while True:
-        random.shuffle(state)
-        attempts += 1
-        flat = state[:]
-        if is_solvable(flat):
-            break
-        if attempts >= 1000:
-            # fallback: accept current state (rare)
-            break
-    print(state)
+    # attempts = 0
+    # while True:
+    #     random.shuffle(state)
+    #     attempts += 1
+    #     flat = state[:]
+    #     if is_solvable(flat):
+    #         break
+    #     if attempts >= 1000:
+    #         # fallback: accept current state (rare)
+    #         break
+    # print(state)
     # convert the flat list to a 2D list (3x3)
     # 3-->step size
-    initial_state = [state[i:i+3] for i in range(0, 9, 3)]
+    # state=[1,2,5,3,4,0,6,7,8]
+    # initial_state = [state[i:i+3] for i in range(0, 9, 3)]
+    initial_state = [[1, 3, 2], [4, 0, 5], [8, 7, 6]]
     print("Initial State:")
     for row in initial_state:
         print(row)
-    goal_state = [[0,1,2],[3,4,5],[6,7,8]]
+    goal_state = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
     print("Goal State:")
     for row in goal_state:
         print(row)
@@ -82,11 +84,12 @@ def main():
     if choice == '1':
         print("Using BFS algorithm to solve the puzzle.")
         steps = Bfs(initial_state, goal_state)
+        print(f"Solution found in {len(steps)-1} moves")
         algo_name = "BFS"
     elif choice == '2':
         print("Using DFS algorithm to solve the puzzle.")
-        from DFS import dfs
-        steps = dfs(initial_state, goal_state)
+        from DFS2 import solve_puzzle_dfs
+        steps = solve_puzzle_dfs(initial_state, goal_state)
         algo_name = "DFS"
     elif choice == '3':
         print("Using IDS algorithm to solve the puzzle.")
@@ -97,19 +100,21 @@ def main():
         print("Using A* (Manhattan) algorithm to solve the puzzle.")
         from A import A_star
         steps = A_star(initial_state, goal_state)
+        print(f"Solution found in {len(steps)-1} moves")
         algo_name = "A_star_Manhattan"
     elif choice == '5':
         print("Using A* (Euclidean) algorithm to solve the puzzle.")
         from A import A_star_Euc
         steps = A_star_Euc(initial_state, goal_state)
+        print(f"Solution found in {len(steps)-1} moves")
         algo_name = "A_star_Euclidean"
     else:
         print("Invalid choice. Exiting.")
 
-    if steps:
-        print(f"Solution found in {len(steps)-1} moves")
-    else:
-        print("No solution found")
+    # if steps:
+    #     print(f"Solution found in {len(steps)-1} moves")
+    # else:
+    #     print("No solution found")
     # create the algos html with the folder path and the file name
     out_path = os.path.join(os.path.dirname(__file__), f'{algo_name}_viewer.html')
     # [initial_state] if no steps so that the html file isnt empty and shows the initial state
