@@ -16,6 +16,11 @@ def Bfs(initial_state, goal_state):
     while queue:
         current_state, path = queue.popleft()
         if current_state == goal_state:
+            for visited_stage in visited:
+                print(visited_stage)
+            print("Visited States of len:", len(visited))
+            print("depth and moves of goal state:", len(path)-1)
+            
             return path
         for neighbor in neighbors(current_state):
             neighbor_tuple = tuple(map(tuple, neighbor))
@@ -23,5 +28,5 @@ def Bfs(initial_state, goal_state):
                 visited.add(neighbor_tuple)
                 # path + the neighbor's state-->path from start to neighbor
                 queue.append((neighbor, path + [neighbor]))
-
+    
     return None

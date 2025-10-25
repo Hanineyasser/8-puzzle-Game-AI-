@@ -86,6 +86,10 @@ def A_star(initialState: list[list[int]], goalState: list[list[int]]):
         visited.add(state)
 
         if state == goal:
+            for visited_stage in visited:
+                print(visited_stage)
+            print("Visited States of len:", len(visited))
+            print(f'Depth and moves of goal state: {len(path)-1}')
             return path  # found solution!
 
         for neighbor in neighbors(state):
@@ -113,6 +117,10 @@ def A_star_Euc(initialState: list[list[int]], goalState: list[list[int]]):
         visited.add(state)
 
         if state == goal:
+            for visited_stage in visited:
+                print(visited_stage)
+            print("Visited States of len:", len(visited))
+            print(f'Depth and moves of goal state: {len(path)-1}')
             return path  # found solution!
 
         for neighbor in neighbors(state):

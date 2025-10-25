@@ -24,6 +24,7 @@ def solve_puzzle_dfs(start, goal, depth_limit=None):
             path_tuples.append(cur)
             cur = parent.get(cur)
         path_tuples.reverse()
+        print(f'Solution path length: {len(path_tuples)-1} moves')
         return [[list(row) for row in t] for t in path_tuples]
 
     while stack:
@@ -38,6 +39,9 @@ def solve_puzzle_dfs(start, goal, depth_limit=None):
             continue
 
         if curr_tuple == goal_tuple:
+            for visited_state in visited:
+                print(visited_state)
+            print(f'Total visited states: {len(visited)}')
             print(f'Goal state reached at depth {depth}')
             return reconstruct_path(curr_tuple)
 
